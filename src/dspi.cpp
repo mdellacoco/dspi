@@ -25,7 +25,7 @@
 #include "Logger.h"
 #include "ClientSocket.h"
 #include "ConfigFile.h"
-//#include <ctime>
+
 
 
 using namespace std;
@@ -43,7 +43,6 @@ int main(int argc, char** argv) {
 
 	pConfigFileParams = _configFile.getConfigParams();
 
-	printf("all ok .. \n");
 
 	//Creates system daemon
 
@@ -58,7 +57,6 @@ int main(int argc, char** argv) {
 
 	// Creates a syslog to store information and errors about Notus app.
 
-	   //SystemLog myAppSysLog(appName);
 	   SystemLog myAppSysLog(pConfigFileParams->_appName.c_str());
 
 	   char hostname[128];
@@ -73,7 +71,6 @@ int main(int argc, char** argv) {
 
 	   ClientSocket* pSocket;
 
-	   //pSocket = ClientSocket::Instance("104.197.107.200","3389");
 	   pSocket = ClientSocket::Instance(pConfigFileParams->_serverParams._servername,
 			                            pConfigFileParams->_serverParams._portNo);
 
@@ -93,8 +90,6 @@ int main(int argc, char** argv) {
     	errorStr = dlerror();
     	msg = "Cannot Load Library: " + errorStr;
 
-    	printf("This is the error: %s\n", msg.c_str());
-    	//cerr << "Cannot Load Library: " << dlerror() << '\n';
     	myAppSysLog.writeErrLog(msg.c_str());
     	msg.clear();
     	dlerror();
@@ -149,7 +144,7 @@ int main(int argc, char** argv) {
     //Initialize spi values
 
     spiDev->setSpiSpeed((uint32_t)atoi(pConfigFileParams->_spiParams._spiSpeed.c_str()));
-    spiDev->setSpiDelay((uint16_t)atoi(pConfigFileParams->_spiParams._spiDelay.c_str()));
+    spiDev->setSpiSpeed((uint16_t)atoi(pConfigFileParams->_spiParams._spiDelay.c_str()));
 
     spiDev->spiInit();
 
@@ -161,6 +156,5 @@ int main(int argc, char** argv) {
     // unload the spiHandler library
     dlclose(spiDevHandler);
 
-	//cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	return 0;
 }

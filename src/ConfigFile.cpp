@@ -75,7 +75,6 @@ void ConfigFile::ReadConfigParams(){
       _config._serverParams._servername = configParams[serverName];
       _config._serverParams._portNo = configParams[portNo];
 
-      printf("here is fine 1 ..\n");
 
     }
 }
